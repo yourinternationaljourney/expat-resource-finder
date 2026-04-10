@@ -4,816 +4,196 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Expat Resource Finder — Your International Journey</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --cream: #F0F8FA;
       --white: #FFFFFF;
-      --brown-dark: #0D3B44;
-      --brown-mid: #1E5F6B;
-      --brown-light: #7BBECA;
+      --dark: #0D3B44;
+      --mid: #1E5F6B;
+      --light: #7BBECA;
       --accent: #1E5F6B;
       --accent-hover: #164d57;
       --border: #C8E8F0;
       --muted: #5A9AAA;
-      --bg-soft: #DFF2F7;
+      --soft: #DFF2F7;
       --error-bg: #FDF0ED;
       --error-text: #9B3A2A;
       --error-border: #F0C4BB;
     }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--dark); }
 
-    body {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      background: var(--cream);
-      color: var(--brown-dark);
-    }
-
-    /* NAV */
-    .nav {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-
-    .nav-logo img { height: 38px; width: auto; }
-
-    .nav-logo-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--brown-dark);
-      line-height: 1.3;
-    }
-
-    .nav-logo-text span {
-      display: block;
-      font-weight: 400;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      color: var(--brown-mid);
-      text-decoration: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-      white-space: nowrap;
-    }
-
-    .nav-links a:hover { background: var(--bg-soft); color: var(--accent); }
-
-    /* HERO */
-    .hero {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 3rem 2rem 2.5rem;
-      text-align: center;
-    }
-
-    .eyebrow {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-
-    .hero h1 {
-      font-size: 38px;
-      font-weight: 400;
-      color: var(--brown-dark);
-      line-height: 1.2;
-      margin-bottom: 14px;
-    }
-
-    .divider {
-      width: 44px;
-      height: 2px;
-      background: var(--brown-light);
-      margin: 1.25rem auto;
-    }
-
-    .hero p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.75;
-    }
-
-    /* TABS */
-    .tabs-wrapper {
-      max-width: 860px;
-      margin: 2rem auto 0;
-      padding: 0 1.5rem;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 8px;
-      border-bottom: 2px solid var(--border);
-      margin-bottom: 2rem;
-    }
-
-    .tab-btn {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      background: none;
-      border: none;
-      padding: 10px 18px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }
-
+    .tabs-wrapper { max-width: 900px; margin: 1.5rem auto 0; padding: 0 1.5rem; }
+    .tabs { display: flex; gap: 6px; border-bottom: 2px solid var(--border); margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab-btn { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); background: none; border: none; padding: 10px 16px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color .15s,border-color .15s; white-space: nowrap; }
     .tab-btn:hover { color: var(--accent); }
-
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* MAIN */
-    .main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.5rem 3rem;
-    }
+    .main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 3rem; }
 
-    /* SHARED COMPONENTS */
-    .legal-banner {
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin-bottom: 1.5rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--brown-mid);
-      line-height: 1.65;
-    }
-
-    .legal-banner strong { color: var(--brown-dark); }
-
-    .api-note {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 1.5rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--brown-mid);
-      line-height: 1.65;
-    }
-
-    .api-note a { color: var(--accent); text-decoration: underline; }
+    .legal-banner { background: var(--soft); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 8px; padding: 14px 18px; margin-bottom: 1.5rem; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; color: var(--mid); line-height: 1.65; }
+    .legal-banner strong { color: var(--dark); }
 
     .input-group { margin-bottom: 1rem; }
+    .input-group label { display: block; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 13px 16px; border: 1px solid var(--border); border-radius: 8px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 15px; color: var(--dark); background: var(--white); outline: none; transition: border-color .2s; }
+    .input-group textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .input-group input:focus, .input-group textarea:focus, .input-group select:focus { border-color: var(--accent); }
+    .input-group input::placeholder, .input-group textarea::placeholder { color: var(--light); }
 
-    .input-group label {
-      display: block;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .input-group input, .input-group textarea, .input-group select {
-      width: 100%;
-      padding: 13px 16px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
-      color: var(--brown-dark);
-      background: var(--white);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .input-group textarea {
-      resize: vertical;
-      min-height: 90px;
-      line-height: 1.6;
-    }
-
-    .input-group input:focus,
-    .input-group textarea:focus,
-    .input-group select:focus { border-color: var(--accent); }
-
-    .input-group input::placeholder,
-    .input-group textarea::placeholder { color: var(--brown-light); }
-
-    .search-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 1.5rem;
-    }
-
-    .search-row input {
-      flex: 1;
-      padding: 14px 18px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Georgia', serif;
-      font-size: 16px;
-      color: var(--brown-dark);
-      background: var(--white);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
+    .search-row { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+    .search-row input { flex: 1; padding: 14px 18px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Georgia',serif; font-size: 16px; color: var(--dark); background: var(--white); outline: none; transition: border-color .2s; }
     .search-row input:focus { border-color: var(--accent); }
-    .search-row input::placeholder { color: var(--brown-light); }
+    .search-row input::placeholder { color: var(--light); }
 
-    .btn {
-      padding: 14px 28px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-      white-space: nowrap;
-    }
-
+    .btn { padding: 14px 28px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s,transform .1s; white-space: nowrap; }
     .btn:hover { background: var(--accent-hover); }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { background: var(--brown-light); cursor: not-allowed; }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { background: var(--light); cursor: not-allowed; }
+    .btn-outline { padding: 10px 18px; background: transparent; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 8px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s; white-space: nowrap; }
+    .btn-outline:hover { background: var(--soft); }
+    .btn-sm { padding: 9px 18px; font-size: 13px; }
 
-    .btn-outline {
-      padding: 11px 20px;
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
-      white-space: nowrap;
-    }
+    .error-box { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 8px; padding: 12px 16px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 14px; color: var(--error-text); margin-bottom: 1.5rem; display: none; }
 
-    .btn-outline:hover { background: var(--bg-soft); }
-
-    .error-box {
-      background: var(--error-bg);
-      border: 1px solid var(--error-border);
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 14px;
-      color: var(--error-text);
-      margin-bottom: 1.5rem;
-      display: none;
-    }
-
-    /* LOADING */
     .loading-state { text-align: center; padding: 4rem 2rem; }
-
-    .spinner {
-      width: 36px; height: 36px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.9s linear infinite;
-      margin: 0 auto 1.25rem;
-    }
-
+    .spinner { width: 36px; height: 36px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .9s linear infinite; margin: 0 auto 1.25rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-state p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 15px; color: var(--muted); }
 
-    .loading-state p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
-      color: var(--muted);
-    }
-
-    /* SINGLE COUNTRY RESULTS */
-    .results-header {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .results-header h2 {
-      font-size: 26px;
-      font-weight: 400;
-      color: var(--brown-dark);
-    }
-
+    .results-header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .results-header h2 { font-size: 26px; font-weight: 400; color: var(--dark); }
     .results-header h2 span { color: var(--accent); }
+    .results-header p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .results-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-    .results-header p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 14px;
-      margin-bottom: 1.5rem;
-    }
-
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1.4rem;
-      transition: box-shadow 0.2s;
-    }
-
-    .card:hover { box-shadow: 0 4px 20px rgba(44,32,22,0.08); }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .card-icon {
-      width: 34px; height: 34px;
-      border-radius: 8px;
-      background: var(--bg-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-
-    .card-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 14px; margin-bottom: 1.5rem; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.4rem; transition: box-shadow .2s; }
+    .card:hover { box-shadow: 0 4px 20px rgba(13,59,68,.08); }
+    .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .card-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--soft); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .card-title { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
     .card ul { list-style: none; }
-
-    .card ul li {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13.5px;
-      color: var(--brown-dark);
-      line-height: 1.65;
-      padding: 6px 0;
-      border-bottom: 1px solid #D8EEF4;
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-    }
-
+    .card ul li { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13.5px; color: var(--dark); line-height: 1.65; padding: 6px 0; border-bottom: 1px solid #D8EEF4; display: flex; gap: 8px; align-items: flex-start; }
     .card ul li:last-child { border-bottom: none; }
+    .card ul li::before { content: "→"; color: var(--accent); font-weight: 600; flex-shrink: 0; margin-top: 1px; font-size: 12px; }
 
-    .card ul li::before {
-      content: "→";
-      color: var(--accent);
-      font-weight: 600;
-      flex-shrink: 0;
-      margin-top: 1px;
-      font-size: 12px;
-    }
+    /* CALCULATOR */
+    .calc-box { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1.5rem; }
+    .calc-box h3 { font-size: 18px; font-weight: 400; color: var(--dark); margin-bottom: 6px; }
+    .calc-box p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 14px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; }
+    .calc-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .calc-row .input-group { flex: 1; min-width: 140px; margin-bottom: 0; }
+    .calc-results { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 12px; margin-top: 1rem; }
+    .calc-card { background: var(--soft); border-radius: 10px; padding: 1rem; text-align: center; }
+    .calc-card .cc-label { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 6px; }
+    .calc-card .cc-value { font-size: 22px; font-weight: 400; color: var(--accent); }
+    .calc-card .cc-sub { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .calc-card.highlight { background: var(--accent); }
+    .calc-card.highlight .cc-label { color: rgba(255,255,255,.7); }
+    .calc-card.highlight .cc-value { color: #fff; }
+    .calc-card.highlight .cc-sub { color: rgba(255,255,255,.7); }
+
+    /* NEXT STEPS */
+    .next-steps { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1.5rem; }
+    .next-steps h3 { font-size: 18px; font-weight: 400; color: var(--dark); margin-bottom: 6px; }
+    .next-steps p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 14px; color: var(--muted); margin-bottom: 1.25rem; }
+    .next-steps-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 10px; }
+    .next-step-card { display: block; text-decoration: none; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; transition: background .15s,border-color .15s; }
+    .next-step-card:hover { background: #C0DDE6; border-color: var(--light); }
+    .next-step-card .ns-icon { font-size: 20px; margin-bottom: 8px; display: block; }
+    .next-step-card .ns-title { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .next-step-card .ns-desc { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; color: var(--muted); line-height: 1.5; }
 
     /* COMPARE */
-    .compare-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 1.5rem;
-    }
-
-    .compare-col-label {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .compare-results {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
+    .compare-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.5rem; }
+    .compare-col-label { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .compare-results { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .compare-col { min-width: 0; }
-
-    .compare-col-header {
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-
-    .compare-col-header h3 {
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--accent);
-    }
-
-    .compare-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .compare-card .card-header {
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-    }
-
-    .compare-card ul li {
-      font-size: 12.5px;
-      padding: 5px 0;
-    }
+    .compare-col-header { background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; text-align: center; }
+    .compare-col-header h3 { font-size: 20px; font-weight: 400; color: var(--accent); }
+    .compare-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 10px; }
+    .compare-card .card-header { margin-bottom: 10px; padding-bottom: 8px; }
+    .compare-card ul li { font-size: 12.5px; padding: 5px 0; }
 
     /* FINDER */
-    .finder-form {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .finder-form h3 {
-      font-size: 18px;
-      font-weight: 400;
-      color: var(--brown-dark);
-      margin-bottom: 6px;
-    }
-
-    .finder-form p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-
-    .finder-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 1.5rem;
-    }
-
-    .finder-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .chip {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      padding: 6px 14px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--white);
-      color: var(--brown-mid);
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-    }
-
+    .finder-form { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; margin-bottom: 1.5rem; }
+    .finder-form h3 { font-size: 18px; font-weight: 400; color: var(--dark); margin-bottom: 6px; }
+    .finder-form p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+    .finder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 1.5rem; }
+    .finder-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px; background: var(--white); color: var(--mid); cursor: pointer; transition: all .15s; user-select: none; }
     .chip:hover { border-color: var(--accent); color: var(--accent); }
     .chip.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    /* RECOMMENDATION CARDS */
-    .rec-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 1.5rem;
-    }
+    /* REC CARDS */
+    .rec-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin-bottom: 1.5rem; }
+    .rec-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: box-shadow .2s; }
+    .rec-card:hover { box-shadow: 0 4px 20px rgba(13,59,68,.08); }
+    .rec-card .rec-rank { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .rec-card .rec-country { font-size: 22px; font-weight: 400; color: var(--dark); margin-bottom: 10px; }
+    .rec-card .rec-why { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; color: var(--mid); line-height: 1.65; margin-bottom: 14px; }
+    .rec-card .rec-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .rec-tag { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 11px; padding: 4px 10px; background: var(--soft); color: var(--mid); border-radius: 12px; }
+    .rec-card .rec-cta { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; font-weight: 600; color: var(--accent); cursor: pointer; background: none; border: none; padding: 0; text-decoration: underline; }
 
-    .rec-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: box-shadow 0.2s;
-    }
-
-    .rec-card:hover { box-shadow: 0 4px 20px rgba(44,32,22,0.08); }
-
-    .rec-card .rec-rank {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .rec-card .rec-country {
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--brown-dark);
-      margin-bottom: 10px;
-    }
-
-    .rec-card .rec-why {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--brown-mid);
-      line-height: 1.65;
-      margin-bottom: 14px;
-    }
-
-    .rec-card .rec-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-
-    .rec-tag {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 11px;
-      padding: 4px 10px;
-      background: var(--bg-soft);
-      color: var(--brown-mid);
-      border-radius: 12px;
-    }
-
-    .rec-card .rec-cta {
-      display: inline-block;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      text-decoration: underline;
-      transition: color 0.15s;
-    }
-
-    .rec-card .rec-cta:hover { color: var(--accent-hover); }
-
-    /* EXPLORE MORE */
-    .explore-section {
-      margin-top: 2.5rem;
-      padding: 2rem;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
-
-    .explore-section h3 {
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--brown-dark);
-      margin-bottom: 6px;
-    }
-
-    .explore-section p {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-      line-height: 1.65;
-    }
-
-    .explore-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px;
-    }
-
-    .explore-card {
-      display: block;
-      text-decoration: none;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
-      transition: background 0.15s, border-color 0.15s;
-    }
-
-    .explore-card:hover { background: #C0DDE6; border-color: var(--brown-light); }
+    /* EXPLORE */
+    .explore-section { margin-top: 2.5rem; padding: 2rem; background: var(--white); border: 1px solid var(--border); border-radius: 14px; }
+    .explore-section h3 { font-size: 20px; font-weight: 400; color: var(--dark); margin-bottom: 6px; }
+    .explore-section p { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 14px; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.65; }
+    .explore-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 10px; }
+    .explore-card { display: block; text-decoration: none; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; transition: background .15s,border-color .15s; }
+    .explore-card:hover { background: #C0DDE6; border-color: var(--light); }
     .explore-card .ec-icon { font-size: 20px; margin-bottom: 8px; display: block; }
-
-    .explore-card .ec-title {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--brown-dark);
-      margin-bottom: 4px;
-    }
-
-    .explore-card .ec-desc {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .explore-card .ec-title { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .explore-card .ec-desc { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; color: var(--muted); line-height: 1.5; }
 
     /* PODCAST */
-    .podcast-banner {
-      margin-top: 1.5rem;
-      background: #0D3B44;
-      border-radius: 14px;
-      padding: 1.75rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
+    .podcast-banner { margin-top: 1.5rem; background: #0D3B44; border-radius: 14px; padding: 1.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
     .podcast-banner .pb-icon { font-size: 36px; flex-shrink: 0; }
     .podcast-banner .pb-text { flex: 1; min-width: 200px; }
-
-    .podcast-banner .pb-eyebrow {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--brown-light);
-      margin-bottom: 6px;
-    }
-
-    .podcast-banner .pb-title {
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
-
-    .podcast-banner .pb-desc {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      color: var(--brown-light);
-      line-height: 1.6;
-    }
-
-    .podcast-banner .pb-btn {
-      display: inline-block;
-      padding: 11px 22px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      transition: background 0.15s;
-      flex-shrink: 0;
-    }
-
+    .podcast-banner .pb-eyebrow { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--light); margin-bottom: 6px; }
+    .podcast-banner .pb-title { font-size: 20px; font-weight: 400; color: #fff; margin-bottom: 6px; }
+    .podcast-banner .pb-desc { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; color: var(--light); line-height: 1.6; }
+    .podcast-banner .pb-btn { display: inline-block; padding: 11px 22px; background: var(--accent); color: #fff; text-decoration: none; border-radius: 8px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 13px; font-weight: 600; white-space: nowrap; transition: background .15s; flex-shrink: 0; }
     .podcast-banner .pb-btn:hover { background: var(--accent-hover); }
 
-    /* LEGAL FULL */
-    .legal-full {
-      margin-top: 2rem;
-      padding: 1.5rem 1.75rem;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .legal-full strong {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--brown-mid);
-      margin-bottom: 8px;
-    }
-
-    /* FOOTER */
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 12px;
-      color: var(--brown-light);
-    }
-
+    /* LEGAL */
+    .legal-full { margin-top: 2rem; padding: 1.5rem 1.75rem; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; color: var(--muted); line-height: 1.8; }
+    .legal-full strong { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--mid); margin-bottom: 8px; }
+    .footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size: 12px; color: var(--light); }
     .footer a { color: var(--accent); text-decoration: none; }
-    .footer a:hover { text-decoration: underline; }
 
     @media (max-width: 640px) {
-      .hero h1 { font-size: 26px; }
       .search-row { flex-direction: column; }
       .btn { width: 100%; }
-      .nav-links { display: none; }
       .compare-inputs { grid-template-columns: 1fr; }
       .compare-results { grid-template-columns: 1fr; }
       .finder-grid { grid-template-columns: 1fr; }
+      .calc-row { flex-direction: column; }
+    }
+
+    @media print {
+      .tabs-wrapper, .tab-btn, .btn, .btn-outline, .results-actions, .explore-section, .podcast-banner, .footer, .legal-full { display: none !important; }
+      .tab-panel { display: block !important; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a class="nav-logo" href="https://www.yourinternationaljourney.com" target="_blank">
-    <img src="https://static.wixstatic.com/media/15d623_f07a6df5c10b4b769b5127e41f775f86~mv2.png/v1/fill/w_127,h_121,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Asset%20138_edited.png" alt="YIJ Logo" />
-    <div class="nav-logo-text">
-      Your International Journey
-      <span>yourinternationaljourney.com</span>
-    </div>
-  </a>
-  <div class="nav-links">
-    <a href="https://www.yourinternationaljourney.com" target="_blank">Home</a>
-    <a href="https://www.yourinternationaljourney.com/start-your-international-journey" target="_blank">Start Your Journey</a>
-    <a href="https://www.yourinternationaljourney.com/career-resources" target="_blank">Career Resources</a>
-    <a href="https://www.yourinternationaljourney.com/borderless-diaries" target="_blank">Borderless Diaries</a>
-    <a href="https://www.yourinternationaljourney.com/blog" target="_blank">Blog</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="eyebrow">Free Tool by YIJ</div>
-  <h1>Expat Resource Finder</h1>
-  <div class="divider"></div>
-  <p>Research any country, compare two destinations side by side, or let us match you to the right place based on what matters most to you.</p>
-</div>
-
-<!-- TABS + MAIN -->
 <div class="tabs-wrapper">
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('research')">🔍 Research a country</button>
     <button class="tab-btn" onclick="switchTab('compare')">⚖️ Compare two countries</button>
     <button class="tab-btn" onclick="switchTab('finder')">✨ Find my country</button>
+    <button class="tab-btn" onclick="switchTab('calculator')">💶 Cost of living calculator</button>
   </div>
 </div>
 
 <div class="main">
-
-  <!-- API key is handled securely server-side -->
 
   <div class="legal-banner">
     <strong>Important:</strong> AI-generated information for general orientation only. Not legal, financial, or immigration advice. Always verify with official sources or a qualified professional.
@@ -834,11 +214,11 @@
     <div class="compare-inputs">
       <div>
         <div class="compare-col-label">Country A</div>
-        <input type="text" id="countryA" placeholder="e.g. Spain" style="width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;color:var(--brown-dark);background:var(--white);outline:none;" />
+        <input type="text" id="countryA" placeholder="e.g. Spain" style="width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;color:var(--dark);background:var(--white);outline:none;" />
       </div>
       <div>
         <div class="compare-col-label">Country B</div>
-        <input type="text" id="countryB" placeholder="e.g. Portugal" style="width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;color:var(--brown-dark);background:var(--white);outline:none;" />
+        <input type="text" id="countryB" placeholder="e.g. Portugal" style="width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:15px;color:var(--dark);background:var(--white);outline:none;" />
       </div>
     </div>
     <button class="btn" id="compareBtn" onclick="compareCountries()" style="margin-bottom:1.5rem;">Compare →</button>
@@ -851,7 +231,6 @@
     <div class="finder-form">
       <h3>Tell us what you're looking for</h3>
       <p>Answer a few quick questions and we'll suggest 3 countries that could be a great fit for you.</p>
-
       <div class="finder-grid">
         <div class="input-group" style="margin-bottom:0;">
           <label>Your current situation</label>
@@ -865,7 +244,6 @@
             <option>Retired or semi-retired</option>
           </select>
         </div>
-
         <div class="input-group" style="margin-bottom:0;">
           <label>Budget (monthly, approx.)</label>
           <select id="f_budget">
@@ -877,7 +255,6 @@
             <option>€6,000+</option>
           </select>
         </div>
-
         <div class="input-group" style="margin-bottom:0;">
           <label>Climate preference</label>
           <select id="f_climate">
@@ -890,7 +267,6 @@
             <option>No preference</option>
           </select>
         </div>
-
         <div class="input-group" style="margin-bottom:0;">
           <label>Language comfort</label>
           <select id="f_language">
@@ -904,7 +280,6 @@
           </select>
         </div>
       </div>
-
       <div class="input-group" style="margin-bottom:1.25rem;">
         <label>What matters most to you? (pick all that apply)</label>
         <div class="finder-chips" id="priorityChips">
@@ -922,20 +297,46 @@
           <span class="chip" onclick="toggleChip(this)">Cultural richness</span>
         </div>
       </div>
-
       <div class="input-group" style="margin-bottom:1.5rem;">
         <label>Anything else? (optional)</label>
         <textarea id="f_extra" placeholder="e.g. I have a dog, I want to be close to the sea, I need good schools for my kids..."></textarea>
       </div>
-
       <button class="btn" id="finderBtn" onclick="findCountry()">Find my match →</button>
     </div>
-
     <div class="error-box" id="errorFinder"></div>
     <div id="resultsFinder"></div>
   </div>
 
-  <!-- EXPLORE MORE (always visible) -->
+  <!-- TAB 4: CALCULATOR -->
+  <div class="tab-panel" id="tab-calculator">
+    <div class="calc-box">
+      <h3>Cost of living calculator</h3>
+      <p>Enter your current country and monthly budget, then compare with a destination country to see what your money is worth abroad.</p>
+      <div class="calc-row">
+        <div class="input-group">
+          <label>Your current country</label>
+          <input type="text" id="calc_from" placeholder="e.g. Netherlands" />
+        </div>
+        <div class="input-group">
+          <label>Destination country</label>
+          <input type="text" id="calc_to" placeholder="e.g. Spain" />
+        </div>
+        <div class="input-group" style="max-width:160px;">
+          <label>Monthly budget (€)</label>
+          <input type="number" id="calc_budget_eur" placeholder="e.g. 3000" min="0" />
+        </div>
+        <div class="input-group" style="max-width:160px;">
+          <label>Monthly budget ($)</label>
+          <input type="number" id="calc_budget_usd" placeholder="e.g. 3200" min="0" />
+        </div>
+      </div>
+      <button class="btn" id="calcBtn" onclick="runCalculator()">Calculate →</button>
+      <div class="error-box" id="errorCalc"></div>
+      <div id="calcResults"></div>
+    </div>
+  </div>
+
+  <!-- EXPLORE MORE -->
   <div class="explore-section">
     <h3>Continue your journey on YIJ</h3>
     <p>This tool is just the start. Explore our free resources to go deeper on every aspect of your international move.</p>
@@ -963,7 +364,7 @@
     </div>
   </div>
 
-  <!-- PODCAST BANNER -->
+  <!-- PODCAST -->
   <div class="podcast-banner">
     <div class="pb-icon">🎙️</div>
     <div class="pb-text">
@@ -974,14 +375,13 @@
     <a class="pb-btn" href="https://open.spotify.com/show/2v4hyi6jx3bYFq9r03xIfv?si=0bfbc81bd5064f8e" target="_blank">Listen on Spotify →</a>
   </div>
 
-  <!-- LEGAL FULL -->
   <div class="legal-full">
     <strong>Legal Disclaimer</strong>
     The information generated by this tool is produced by an artificial intelligence model (Claude by Anthropic) and is provided for general informational and inspirational purposes only. It does not constitute legal, financial, tax, immigration, or professional advice of any kind. Your International Journey (YIJ) and its founder make no representations or warranties — express or implied — regarding the accuracy, completeness, or suitability of any information provided. Laws, visa regulations, tax rules, and cost of living figures change frequently and vary by individual circumstances. You should always consult with a qualified legal, financial, or immigration professional before making any decisions. By using this tool, you acknowledge and agree that YIJ accepts no liability whatsoever for any decisions made or actions taken based on the information generated here.
   </div>
 
   <div class="footer">
-    <p>A free tool by <a href="https://www.yourinternationaljourney.com" target="_blank">Your International Journey</a> &nbsp;·&nbsp; Powered by Claude AI (Anthropic) &nbsp;·&nbsp; <a href="https://www.yourinternationaljourney.com/legal-notice-disclaimer" target="_blank">Legal Notice</a> &nbsp;·&nbsp; <a href="mailto:info@yourinternationaljourney.com">Contact</a></p>
+    <p>A free tool by <a href="https://www.yourinternationaljourney.com" target="_blank">Your International Journey</a> &nbsp;·&nbsp; Powered by Claude AI &nbsp;·&nbsp; <a href="https://www.yourinternationaljourney.com/legal-notice-disclaimer" target="_blank">Legal Notice</a> &nbsp;·&nbsp; <a href="mailto:info@yourinternationaljourney.com">Contact</a></p>
   </div>
 
 </div>
@@ -996,31 +396,33 @@
     { key: 'culture',      label: 'Cultural living experience', icon: '🏡' }
   ];
 
+  const nextStepsMap = {
+    default: [
+      { icon: '🏠', title: 'Arriving & Settling In', desc: 'Practical tips for your first weeks', url: 'https://www.yourinternationaljourney.com/arriving-settling-in' },
+      { icon: '🤝', title: 'Community & Culture', desc: 'Find your people in a new country', url: 'https://www.yourinternationaljourney.com/community-networking-culture' },
+      { icon: '💼', title: 'Career Resources', desc: 'Tools for your international career', url: 'https://www.yourinternationaljourney.com/career-resources' },
+      { icon: '📦', title: 'Packing & Moving', desc: 'Everything for your physical move', url: 'https://www.yourinternationaljourney.com/packing-moving' },
+      { icon: '📚', title: 'Continuous Learning', desc: 'Upskill for your international journey', url: 'https://www.yourinternationaljourney.com/continuous-learning' },
+      { icon: '🎙️', title: 'Borderless Diaries', desc: 'Real expat stories on the podcast', url: 'https://open.spotify.com/show/2v4hyi6jx3bYFq9r03xIfv' }
+    ]
+  };
+
   function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach((b, i) => {
-      b.classList.toggle('active', ['research','compare','finder'][i] === tab);
+      b.classList.toggle('active', ['research','compare','finder','calculator'][i] === tab);
     });
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
   }
 
-  function showError(id, msg) {
-    const el = document.getElementById(id);
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  function hideError(id) {
-    document.getElementById(id).style.display = 'none';
-  }
+  function showError(id, msg) { const el = document.getElementById(id); el.textContent = msg; el.style.display = 'block'; }
+  function hideError(id) { document.getElementById(id).style.display = 'none'; }
 
   async function callClaude(prompt) {
     const response = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
     });
     if (!response.ok) {
       const err = await response.json();
@@ -1049,30 +451,32 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
     let html = '<div class="cards-grid">';
     sections.forEach(s => {
       const items = data[s.key] || [];
-      html += `<div class="card">
-        <div class="card-header">
-          <div class="card-icon">${s.icon}</div>
-          <div class="card-title">${s.label}</div>
-        </div>
-        <ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>
-      </div>`;
+      html += `<div class="card"><div class="card-header"><div class="card-icon">${s.icon}</div><div class="card-title">${s.label}</div></div><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
     });
     return html + '</div>';
   }
 
-  function renderCompactCards(data) {
-    let html = '';
-    sections.forEach(s => {
-      const items = data[s.key] || [];
-      html += `<div class="compare-card">
-        <div class="card-header">
-          <div class="card-icon">${s.icon}</div>
-          <div class="card-title">${s.label}</div>
-        </div>
-        <ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>
-      </div>`;
-    });
-    return html;
+  function renderNextSteps(country) {
+    const steps = nextStepsMap.default;
+    return `<div class="next-steps">
+      <h3>Your next steps for ${country}</h3>
+      <p>Ready to go deeper? Here's where to go next on YIJ.</p>
+      <div class="next-steps-grid">
+        ${steps.map(s => `<a class="next-step-card" href="${s.url}" target="_blank"><span class="ns-icon">${s.icon}</span><div class="ns-title">${s.title}</div><div class="ns-desc">${s.desc}</div></a>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  function downloadPDF(country) {
+    const el = document.getElementById('resultsResearch');
+    const opt = {
+      margin: 0.5,
+      filename: `yij-expat-${country.toLowerCase().replace(/\s/g,'-')}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(el).save();
   }
 
   // TAB 1: RESEARCH
@@ -1081,7 +485,6 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
     const results = document.getElementById('resultsResearch');
     const btn = document.getElementById('searchBtn');
     hideError('errorResearch');
-
     if (!country) { showError('errorResearch', 'Please enter a country name.'); return; }
 
     btn.textContent = 'Researching...';
@@ -1093,10 +496,17 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
       const parsed = JSON.parse(raw);
       results.innerHTML = `
         <div class="results-header">
-          <h2>Your snapshot for <span>${country}</span></h2>
-          <p>AI-generated overview for orientation only — always verify with official sources.</p>
+          <div>
+            <h2>Your snapshot for <span>${country}</span></h2>
+            <p>AI-generated overview — always verify with official sources before making decisions.</p>
+          </div>
+          <div class="results-actions">
+            <button class="btn-outline btn-sm" onclick="downloadPDF('${country}')">⬇ Download PDF</button>
+            <button class="btn-outline btn-sm" onclick="jumpToCompare('${country}')">⚖ Compare with another</button>
+          </div>
         </div>
-        ${renderCards(parsed)}`;
+        ${renderCards(parsed)}
+        ${renderNextSteps(country)}`;
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch(e) {
       showError('errorResearch', 'Something went wrong: ' + e.message);
@@ -1107,43 +517,52 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
     }
   }
 
+  function jumpToCompare(country) {
+    switchTab('compare');
+    document.getElementById('countryA').value = country;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // TAB 2: COMPARE
+  function renderCompactCards(data) {
+    let html = '';
+    sections.forEach(s => {
+      const items = data[s.key] || [];
+      html += `<div class="compare-card"><div class="card-header"><div class="card-icon">${s.icon}</div><div class="card-title">${s.label}</div></div><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul></div>`;
+    });
+    return html;
+  }
+
   async function compareCountries() {
     const a = document.getElementById('countryA').value.trim();
     const b = document.getElementById('countryB').value.trim();
     const results = document.getElementById('resultsCompare');
     const btn = document.getElementById('compareBtn');
     hideError('errorCompare');
-
     if (!a || !b) { showError('errorCompare', 'Please enter both country names.'); return; }
     if (a.toLowerCase() === b.toLowerCase()) { showError('errorCompare', 'Please enter two different countries.'); return; }
 
     btn.textContent = 'Comparing...';
     btn.disabled = true;
-    results.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Comparing ${a} and ${b}. This takes a few seconds...</p></div>`;
+    results.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Comparing ${a} and ${b}...</p></div>`;
 
     try {
-      const [rawA, rawB] = await Promise.all([
-        callClaude(countryPrompt(a)),
-        callClaude(countryPrompt(b))
-      ]);
+      const [rawA, rawB] = await Promise.all([callClaude(countryPrompt(a)), callClaude(countryPrompt(b))]);
       const dataA = JSON.parse(rawA);
       const dataB = JSON.parse(rawB);
-
       results.innerHTML = `
         <div class="results-header">
-          <h2><span>${a}</span> vs <span>${b}</span></h2>
-          <p>AI-generated comparison for orientation only — always verify with official sources.</p>
+          <div>
+            <h2><span>${a}</span> vs <span>${b}</span></h2>
+            <p>AI-generated comparison — always verify with official sources.</p>
+          </div>
+          <div class="results-actions">
+            <button class="btn-outline btn-sm" onclick="downloadCompare('${a}','${b}')">⬇ Download PDF</button>
+          </div>
         </div>
         <div class="compare-results">
-          <div class="compare-col">
-            <div class="compare-col-header"><h3>${a}</h3></div>
-            ${renderCompactCards(dataA)}
-          </div>
-          <div class="compare-col">
-            <div class="compare-col-header"><h3>${b}</h3></div>
-            ${renderCompactCards(dataB)}
-          </div>
+          <div class="compare-col"><div class="compare-col-header"><h3>${a}</h3></div>${renderCompactCards(dataA)}</div>
+          <div class="compare-col"><div class="compare-col-header"><h3>${b}</h3></div>${renderCompactCards(dataB)}</div>
         </div>`;
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch(e) {
@@ -1155,10 +574,13 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
     }
   }
 
-  // TAB 3: FINDER
-  function toggleChip(el) {
-    el.classList.toggle('selected');
+  function downloadCompare(a, b) {
+    const el = document.getElementById('resultsCompare');
+    html2pdf().set({ margin: 0.5, filename: `yij-compare-${a}-vs-${b}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } }).from(el).save();
   }
+
+  // TAB 3: FINDER
+  function toggleChip(el) { el.classList.toggle('selected'); }
 
   async function findCountry() {
     const situation = document.getElementById('f_situation').value;
@@ -1168,54 +590,38 @@ Each point max 15 words, practical, honest mix of pros and challenges.`;
     const extra     = document.getElementById('f_extra').value.trim();
     const results   = document.getElementById('resultsFinder');
     const btn       = document.getElementById('finderBtn');
+    const selected  = [...document.querySelectorAll('#priorityChips .chip.selected')].map(c => c.textContent);
     hideError('errorFinder');
-
-    const selected = [...document.querySelectorAll('#priorityChips .chip.selected')].map(c => c.textContent);
-
-    if (!situation && !budget && !climate && selected.length === 0) {
-      showError('errorFinder', 'Please fill in at least a few fields so we can find your match.'); return;
-    }
+    if (!situation && !budget && !climate && selected.length === 0) { showError('errorFinder', 'Please fill in at least a few fields.'); return; }
 
     btn.textContent = 'Finding your match...';
     btn.disabled = true;
     results.innerHTML = `<div class="loading-state"><div class="spinner"></div><p>Finding your best country matches...</p></div>`;
 
-    const prompt = `You are an expat destination advisor for yourinternationaljourney.com. Based on the person's profile below, recommend exactly 3 countries that would be a strong fit for them.
+    const prompt = `You are an expat destination advisor for yourinternationaljourney.com. Based on this profile, recommend exactly 3 countries.
 
 Profile:
 - Situation: ${situation || 'Not specified'}
-- Monthly budget: ${budget || 'Not specified'}
-- Climate preference: ${climate || 'No preference'}
+- Budget: ${budget || 'Not specified'}
+- Climate: ${climate || 'No preference'}
 - Language: ${language || 'No preference'}
 - Priorities: ${selected.length > 0 ? selected.join(', ') : 'Not specified'}
-- Extra notes: ${extra || 'None'}
+- Notes: ${extra || 'None'}
 
-Return ONLY valid JSON, no markdown, no preamble:
+Return ONLY valid JSON, no markdown:
 {
   "recommendations": [
-    {
-      "country": "Country name",
-      "why": "2-3 sentence explanation of why this is a great match for this specific person",
-      "tags": ["tag1", "tag2", "tag3"],
-      "highlight": "One standout thing about this country for this person"
-    }
+    { "country": "Name", "why": "2-3 sentences why this fits this person specifically", "tags": ["tag1","tag2","tag3"], "highlight": "One standout reason for this person" }
   ]
 }
-Be specific and honest. Tailor each recommendation to the person's actual profile. Tags should be 2-3 word phrases like "Low cost", "Visa friendly", "Digital nomad hub".`;
+Tags should be 2-3 word phrases. Be specific and honest.`;
 
     try {
       const raw = await callClaude(prompt);
       const parsed = JSON.parse(raw);
       const recs = parsed.recommendations || [];
-
       const ranks = ['Match #1', 'Match #2', 'Match #3'];
-      let html = `
-        <div class="results-header">
-          <h2>Your top <span>3 country matches</span></h2>
-          <p>Based on your profile. AI-generated — always verify with official sources before making decisions.</p>
-        </div>
-        <div class="rec-cards">`;
-
+      let html = `<div class="results-header"><div><h2>Your top <span>3 matches</span></h2><p>Based on your profile — AI-generated, always verify before deciding.</p></div></div><div class="rec-cards">`;
       recs.forEach((r, i) => {
         html += `<div class="rec-card">
           <div class="rec-rank">${ranks[i] || 'Match'}</div>
@@ -1225,7 +631,6 @@ Be specific and honest. Tailor each recommendation to the person's actual profil
           <button class="rec-cta" onclick="jumpToResearch('${r.country}')">Research ${r.country} in full →</button>
         </div>`;
       });
-
       html += '</div>';
       results.innerHTML = html;
       results.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1245,10 +650,136 @@ Be specific and honest. Tailor each recommendation to the person's actual profil
     setTimeout(() => researchCountry(), 400);
   }
 
-  document.getElementById('countryInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') researchCountry();
-  });
-</script>
+  // TAB 4: CALCULATOR
+  async function runCalculator() {
+    const from   = document.getElementById('calc_from').value.trim();
+    const to     = document.getElementById('calc_to').value.trim();
+    const eur    = parseFloat(document.getElementById('calc_budget_eur').value) || 0;
+    const usd    = parseFloat(document.getElementById('calc_budget_usd').value) || 0;
+    const budget = eur || (usd * 0.92);
+    const results = document.getElementById('calcResults');
+    const btn = document.getElementById('calcBtn');
+    hideError('errorCalc');
 
+    if (!from || !to) { showError('errorCalc', 'Please enter both your current country and destination country.'); return; }
+    if (!eur && !usd) { showError('errorCalc', 'Please enter your monthly budget in € or $.'); return; }
+
+    btn.textContent = 'Calculating...';
+    btn.disabled = true;
+    results.innerHTML = `<div class="loading-state" style="padding:2rem;"><div class="spinner"></div><p>Calculating your cost of living comparison...</p></div>`;
+
+    const prompt = `You are a cost of living expert. Compare the cost of living between ${from} and ${to} for an expat with a monthly budget of €${Math.round(budget)}.
+
+Return ONLY valid JSON, no markdown, no preamble:
+{
+  "index_from": 100,
+  "index_to": 75,
+  "equivalent_eur": 2250,
+  "equivalent_usd": 2430,
+  "purchasing_power": "18% more",
+  "rent_from": "€1,200/month avg for 1BR city center",
+  "rent_to": "€800/month avg for 1BR city center",
+  "groceries_from": "€300/month for one person",
+  "groceries_to": "€200/month for one person",
+  "dining_from": "€15 avg meal",
+  "dining_to": "€10 avg meal",
+  "transport_from": "€80/month public transport",
+  "transport_to": "€40/month public transport",
+  "summary": "2-3 sentence honest summary of what this means for someone moving from ${from} to ${to} with this budget"
+}
+
+index_from is always 100. index_to is relative cost (below 100 = cheaper, above 100 = more expensive).
+equivalent_eur and equivalent_usd: what €${Math.round(budget)} from ${from} is equivalent to in ${to}.
+Be accurate and specific. Use real approximate figures.`;
+
+    try {
+      const raw = await callClaude(prompt);
+      const d = JSON.parse(raw);
+      const budgetEur = Math.round(budget);
+      const budgetUsd = Math.round(budget / 0.92);
+      const cheaper = d.index_to < 100;
+
+      results.innerHTML = `
+        <div style="margin-top:1.5rem;">
+          <div class="calc-results">
+            <div class="calc-card highlight">
+              <div class="cc-label">Your budget in ${from}</div>
+              <div class="cc-value">€${budgetEur.toLocaleString()}</div>
+              <div class="cc-sub">$${budgetUsd.toLocaleString()} approx.</div>
+            </div>
+            <div class="calc-card highlight">
+              <div class="cc-label">Equivalent in ${to}</div>
+              <div class="cc-value">€${(d.equivalent_eur||0).toLocaleString()}</div>
+              <div class="cc-sub">$${(d.equivalent_usd||0).toLocaleString()} approx.</div>
+            </div>
+            <div class="calc-card">
+              <div class="cc-label">Cost of living index</div>
+              <div class="cc-value">${d.index_to}</div>
+              <div class="cc-sub">${from} = 100 · ${cheaper ? to + ' is cheaper' : to + ' is more expensive'}</div>
+            </div>
+            <div class="calc-card">
+              <div class="cc-label">Purchasing power</div>
+              <div class="cc-value">${d.purchasing_power || (cheaper ? 'More' : 'Less')}</div>
+              <div class="cc-sub">compared to ${from}</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:1.5rem;">
+            <div class="card">
+              <div class="card-header"><div class="card-icon">🏠</div><div class="card-title">Rent</div></div>
+              <ul>
+                <li>${from}: ${d.rent_from}</li>
+                <li>${to}: ${d.rent_to}</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-icon">🛒</div><div class="card-title">Groceries</div></div>
+              <ul>
+                <li>${from}: ${d.groceries_from}</li>
+                <li>${to}: ${d.groceries_to}</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-icon">🍽️</div><div class="card-title">Dining out</div></div>
+              <ul>
+                <li>${from}: ${d.dining_from}</li>
+                <li>${to}: ${d.dining_to}</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="card-header"><div class="card-icon">🚇</div><div class="card-title">Transport</div></div>
+              <ul>
+                <li>${from}: ${d.transport_from}</li>
+                <li>${to}: ${d.transport_to}</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-top:1.25rem;background:var(--soft);border-radius:10px;padding:1.25rem 1.5rem;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;color:var(--mid);line-height:1.7;">
+            <strong style="display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:8px;">Summary</strong>
+            ${d.summary}
+          </div>
+
+          <div style="margin-top:1rem;display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-outline btn-sm" onclick="jumpToResearch('${to}')">Research ${to} in full →</button>
+            <button class="btn-outline btn-sm" onclick="downloadCalc('${from}','${to}')">⬇ Download PDF</button>
+          </div>
+        </div>`;
+    } catch(e) {
+      showError('errorCalc', 'Something went wrong: ' + e.message);
+      results.innerHTML = '';
+    } finally {
+      btn.textContent = 'Calculate →';
+      btn.disabled = false;
+    }
+  }
+
+  function downloadCalc(from, to) {
+    const el = document.getElementById('calcResults');
+    html2pdf().set({ margin: 0.5, filename: `yij-cost-of-living-${from}-vs-${to}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4' } }).from(el).save();
+  }
+
+  document.getElementById('countryInput').addEventListener('keydown', e => { if (e.key === 'Enter') researchCountry(); });
+</script>
 </body>
 </html>
